@@ -14,4 +14,3 @@ const DB = new Pool({
 })
 
 export default DB
-
