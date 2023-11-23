@@ -2,13 +2,14 @@ import express from 'express'
 
 import bodyParser from 'body-parser'
 
-import {
-    fetchAllTasks,
-    fetchTaskById,
-    createTask,
-    updateTask,
-    deleteTask,
-} from './models/tasks'
+import { getTasks, getTaskById } from './controllers/tasks'
+// import {
+//     fetchAllTasks,
+//     fetchTaskById,
+//     // createTask,
+//     // updateTask,
+//     // deleteTask,
+// } from './models/tasks'
 
 const app = express()
 const port = process.env.PORT || 9000
@@ -26,10 +27,10 @@ app.get('/', (_req, resp) => {
     })
 })
 
-app.get('/tasks', fetchAllTasks)
-app.get('/tasks/:id', fetchTaskById)
-app.post('/tasks', createTask)
-app.put('/users/:id', updateTask)
-app.delete('/users/:id', deleteTask)
+app.get('/tasks', getTasks)
+// app.get('/tasks/:id', fetchTaskById)
+// app.post('/tasks', createTask)
+// app.put('/users/:id', updateTask)
+// app.delete('/users/:id', deleteTask)
 
 app.listen(port, () => console.log(`Server running at localhost:${port}`))

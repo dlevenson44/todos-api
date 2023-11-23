@@ -1,66 +1,28 @@
-import type { Request, Response } from 'express'
-import type { QueryResult } from 'pg'
-
 import DB from '../db'
+import type { PostTaskPayload, Task } from '../types/tasks'
 
-export interface Task {
-    id: string
-    title: string
-    description: string
-    completed: boolean
-}
+export const fetchAllTasks = () =>
+    DB.query('SELECT * FROM todos ORDER BY id ASC')
 
-export const fetchAllTasks = (_req: Request, resp: Response) => {
-    DB.query(
-        'SELECT * FROM todos ORDER BY id ASC',
-        (err: Record<string, any>, results: QueryResult) => {
-            if (err) throw err
-            resp.status(200).json(results.rows)
-        }
-    )
-}
+export const fetchTaskById = (id: number) =>
+    DB.query('SELECT * FROM todos WHERE id = $1', [id])
 
-export const fetchTaskById = (req: Request, resp: Response) => {
-    const taskId = parseInt(req.params.id)
-
-    DB.query('SELECT * FROM todos WHERE id = $1', [taskId], (err, results) => {
-        if (err) throw err
-        resp.status(200).json(results.rows)
-    })
-}
-
-export const createTask = (req: Request, resp: Response) => {
-    const { title, description } = req.body
-
+export const createTask = ({ title , description }: PostTaskPayload) =>
     DB.query(
         'INSERT INTO (title, description, completed) todos VALUES ($1, $2, false)',
-        [title, description],
-        (err, results) => {
-            if (err) throw err
-            resp.status(201).send(`User added with ID ${results.oid}`)
-        }
+        [title, description]
     )
-}
 
-export const updateTask = (req: Request, resp: Response) => {
-    const id = parseInt(req.params.id)
-    const { title, description, completed } = req.body
-
+export const updateTask = ({
+    title,
+    description,
+    completed,
+    id,
+}: Task) =>
     DB.query(
         'UPDATE todos SET title = $1, description = $2, completed = $3, WHERE id = $4',
-        [title, description, completed, id],
-        (err) => {
-            if (err) throw err
-            resp.status(200).send(`User modified with ID: ${id}`)
-        }
+        [title, description, completed, id]
     )
-}
 
-export const deleteTask = (req: Request, resp: Response) => {
-    const id = parseInt(req.params.id)
-
-    DB.query('DELETE FROM todos WHERE id = $1', [id], (err) => {
-        if (err) throw err
-        resp.status(200).send(`User deleted with ID: ${id}`)
-    })
-}
+export const removeTask = (id: number) =>
+    DB.query('DELETE FROM todos WHERE id = $1', [id])

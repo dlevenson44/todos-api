@@ -9,7 +9,6 @@
         "forceConsistentCasingInFileNames": true,
         "isolatedModules": true,
         "moduleResolution": "Node",
-        "noUnusedLocals": true,
         "noUnusedParameters": true,
         "preserveWatchOutput": true,
         "noImplicitReturns": true,

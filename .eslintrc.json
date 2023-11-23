@@ -27,7 +27,6 @@
       "no-useless-concat": "error",
       "no-useless-return": "error",
       "no-constant-condition": "warn",
-      "no-unused-vars": ["warn", { "argsIgnorePattern": "req|res|next|__" }],
       //* Enhance Readability
       "indent": ["error", 4, { "SwitchCase": 1 }],
       "no-mixed-spaces-and-tabs": "warn",
@@ -59,6 +58,7 @@
       "prefer-const": "error",
       "prefer-template": "warn",
       //   Typescript
-      "@typescript-eslint/no-explicit-any": 0
+      "@typescript-eslint/no-explicit-any": 0,
+      "@typescript-eslint/no-unused-vars": 1
     }
   }
