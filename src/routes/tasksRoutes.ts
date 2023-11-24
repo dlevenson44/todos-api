@@ -6,7 +6,7 @@ import {
   postTask,
   putTask,
   deleteTask,
-} from '../controllers/tasks'
+} from '../controllers/tasksController'
 
 const tasksRoute = (app: Express) => {
   app.get('/tasks', getTasks)
