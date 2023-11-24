@@ -18,7 +18,6 @@ export const getTasks = (_req: Request, res: Response) =>
       res.status(200).json({ data: result.rows })
     )
     .catch((err) => {
-      console.log('ERROR:   ', err)
       res.status(500).json({ err, message: 'Error fetching all tasks' })
     })
 
@@ -27,7 +26,9 @@ export const getTaskById = (req: Request, res: Response) => {
   fetchTaskById(id)
     .then((result: QueryResult) =>
       isEmpty(result.rows)
-        ? res.status(404).json({ message: `Task ID ${id} was not found in DB` })
+        ? res.status(404).json({
+            message: `Task ID ${id} was not found in DB`,
+          })
         : res.status(200).json({ data: result.rows[0] })
     )
     .catch((err) =>

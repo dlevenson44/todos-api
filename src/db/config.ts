@@ -3,7 +3,7 @@ import { Pool } from 'pg'
 
 dotenv.config()
 
-const DB = new Pool({
+const dbConfig = new Pool({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   host: process.env.DB_HOST,
@@ -13,4 +13,4 @@ const DB = new Pool({
   connectionTimeoutMillis: 2000,
 })
 
-export default DB
+export default dbConfig
