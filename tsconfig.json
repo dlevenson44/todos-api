@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
-        "target": "es2015",
-        "module": "es2015",
+        "target": "es6",
+        "module": "commonjs",
         "outDir": "./dist",
         "strict": true,
         "esModuleInterop": true,
@@ -14,6 +14,6 @@
         "noImplicitReturns": true,
         "sourceMap": true
     },
-    "include": ["src/**/*.ts"],
+    "include": ["src/**/*.ts", "src/db/migration.mjs"],
     "exclude": ["node_modules", "dist"]
 }

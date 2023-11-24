@@ -1,8 +1,11 @@
-DROP IF TABLE EXISTS todos;
-
-CREATE TABLE todos(
-  ID INT PRIMARY KEY NOT NULL,
-  TITLE VARCHAR (255) NOT NULL
+CREATE TABLE IF NOT EXISTS todos(
+  id SERIAL PRIMARY KEY,
+  title VARCHAR(225) NOT NULL,
+  description TEXT NOT NULL
 );
-
-insert into todos VALUES (12345, "TEST TITLE");
+INSERT INTO
+  todos(title, description)
+VALUES(
+    'First task',
+    'This is the first task description'
+  );
