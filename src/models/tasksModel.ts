@@ -9,13 +9,20 @@ export const fetchTaskById = (id: number) =>
 
 export const createTask = ({ title, description }: PostTaskPayload) =>
   dbConfig.query(
-    'INSERT INTO (title, description, completed) todos VALUES ($1, $2, false)',
+    'INSERT INTO todos(title, description, completed) VALUES($1, $2, false)',
     [title, description]
   )
 
 export const updateTask = ({ title, description, completed, id }: Task) =>
   dbConfig.query(
-    'UPDATE todos SET title = $1, description = $2, completed = $3, WHERE id = $4',
+    `
+      UPDATE todos SET
+      title = $1,
+      description = $2,
+      completed = $3
+      WHERE id = $4
+      RETURNING *
+    `,
     [title, description, completed, id]
   )
 
