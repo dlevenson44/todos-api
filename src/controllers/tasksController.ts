@@ -41,7 +41,7 @@ export const getTaskById = (req: Request, res: Response) => {
 export const postTask = (req: Request<PostTaskPayload>, res: Response) => {
   const { title, description } = req.body
 
-  if (!title || !description) {
+  if (!title || !description || title.length > 255) {
     res.status(400).json({
       message:
         'Bad payload: title AND description are required to create new task',
@@ -50,7 +50,6 @@ export const postTask = (req: Request<PostTaskPayload>, res: Response) => {
     createTask({ title, description })
       .then((result: QueryResult<Task>) => res.status(201).json({ result }))
       .catch((err) => {
-        console.log('ERROR:   ', err)
         res.status(500).json({ err, message: 'Error creating task' })
       })
   }
@@ -60,9 +59,14 @@ export const putTask = (req: Request<Task>, res: Response) => {
   const id = parseInt(String(req.params.id))
   const { title, description, completed } = req.body
   updateTask({ title, description, completed, id })
-    .then((result: QueryResult<Task>) => res.status(200).json({ result }))
+    .then((result: QueryResult<Task>) =>
+      isEmpty(result.rows)
+        ? res.status(404).json({
+            message: `Task ID ${id} was not found in DB`,
+          })
+        : res.status(200).json({ result })
+    )
     .catch((err) => {
-      console.log('ERROR:   ', err)
       res.status(500).json({
         err,
         message: `Error updating task with id ${id}`,
@@ -73,14 +77,17 @@ export const putTask = (req: Request<Task>, res: Response) => {
 export const deleteTask = (req: Request, res: Response) => {
   const id = parseInt(req.params.id)
   removeTask(id)
-    .then(() =>
-      res.status(200).json({ message: `Task ${id} has been removed` })
+    .then((result) =>
+      isEmpty(result.rows)
+        ? res.status(404).json({
+            message: `Task ID ${id} was not found in DB`,
+          })
+        : res.status(200).json({ message: `Task ${id} has been removed` })
     )
     .catch((err) => {
-      console.log('ERROR:   ', err)
       res.status(500).json({
         err,
-        message: `Error updating task with id ${id}`,
+        message: `Error deleting task with id ${id}`,
       })
     })
 }
