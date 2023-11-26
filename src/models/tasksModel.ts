@@ -9,7 +9,7 @@ export const fetchTaskById = (id: number) =>
 
 export const createTask = ({ title, description }: PostTaskPayload) =>
   dbConfig.query(
-    'INSERT INTO todos(title, description, completed) VALUES($1, $2, false)',
+    'INSERT INTO todos(title, description, completed) VALUES($1, $2, false) RETURNING *',
     [title, description]
   )
 

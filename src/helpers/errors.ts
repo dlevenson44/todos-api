@@ -29,13 +29,11 @@ export const generateClientError = ({
   switch (status) {
     case 400:
       res.status(400).json({
-        message: `Malformed Payload while ${action}: ${messageDetails}`,
+        message: `Bad Payload ${action}: ${messageDetails ?? ''}`,
       })
       break
     case 404:
-      res
-        .status(404)
-        .json({ message: `Not Found while ${action} task: ID ${id}` })
+      res.status(404).json({ message: `Not Found ${action} task: ID ${id}` })
       break
     default:
       res.status(418).json({ message: 'I am a teapot!' })

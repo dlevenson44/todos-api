@@ -5,4 +5,6 @@ export interface Task {
   completed: boolean
 }
 
-export type PostTaskPayload = Omit<Task, 'id' | 'completed'>
+export interface PostTaskPayload extends Omit<Task, 'id' | 'completed'> {
+  id?: string
+}

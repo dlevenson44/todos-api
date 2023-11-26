@@ -26,3 +26,5 @@ tasksRoute(app)
 
 // eslint-disable-next-line no-console
 app.listen(port, () => console.log(`Server running at localhost:${port}`))
+
+export default app

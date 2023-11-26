@@ -34,10 +34,10 @@ export const getTaskById = (req: Request, res: Response) => {
 export const postTask = (req: Request<PostTaskPayload>, res: Response) => {
   const { title, description } = req.body
 
-  if (!title || !description || title.length > 255) {
-    const messageDetails = title.length
+  if (!title || !description || title?.length > 255) {
+    const messageDetails = title?.length
       ? 'Title length too long'
-      : 'Missing Title and/or Description field'
+      : 'Missing Title or Description field'
     generateClientError({
       res,
       action: 'creating',
@@ -46,7 +46,9 @@ export const postTask = (req: Request<PostTaskPayload>, res: Response) => {
     })
   } else {
     createTask({ title, description })
-      .then((result: QueryResult<Task>) => res.status(201).json({ result }))
+      .then((result: QueryResult<Task>) =>
+        res.status(201).json({ data: result.rows[0] })
+      )
       .catch((err) => generateServerError({ res, action: 'creating', err }))
   }
 }
