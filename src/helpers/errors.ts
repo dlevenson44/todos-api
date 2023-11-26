@@ -38,6 +38,6 @@ export const generateClientError = ({
         .json({ message: `Not Found while ${action} task: ID ${id}` })
       break
     default:
-      res.status(400).json({ message: 'unknown client error' })
+      res.status(418).json({ message: 'I am a teapot!' })
   }
 }
