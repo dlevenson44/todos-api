@@ -57,12 +57,7 @@ export const putTask = (req: Request<Task>, res: Response) => {
   const id = parseInt(String(req.params.id))
   const { title, description, completed } = req.body
 
-  if (
-    !title ||
-    !description ||
-    completed === undefined ||
-    title?.length > 255
-  ) {
+  if (!title || !description || title?.length > 255) {
     const messageDetails =
       title.length > 255
         ? 'Title length too long'
@@ -86,21 +81,11 @@ export const putTask = (req: Request<Task>, res: Response) => {
 
 export const deleteTask = (req: Request, res: Response) => {
   const id = parseInt(req.params.id)
-
-  if (!id) {
-    generateClientError({
-      res,
-      action: 'deleting',
-      status: 400,
-      messageDetails: 'missing id',
-    })
-  } else {
-    removeTask(id)
-      .then((result) =>
-        isEmpty(result.rows)
-          ? generateClientError({ res, action: 'updating', id, status: 404 })
-          : res.status(200).json({ message: `Task ${id} has been removed` })
-      )
-      .catch((err) => generateServerError({ res, action: 'deleting', err, id }))
-  }
+  removeTask(id)
+    .then((result) =>
+      !result.rowCount
+        ? generateClientError({ res, action: 'deleting', id, status: 404 })
+        : res.status(200).json({ message: `Task ${id} has been removed` })
+    )
+    .catch((err) => generateServerError({ res, action: 'deleting', err, id }))
 }
