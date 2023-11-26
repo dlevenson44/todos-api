@@ -57,10 +57,16 @@ export const putTask = (req: Request<Task>, res: Response) => {
   const id = parseInt(String(req.params.id))
   const { title, description, completed } = req.body
 
-  if (!title || !description || !completed || title.length > 255) {
-    const messageDetails = title.length
-      ? 'Title length too long'
-      : 'Missing Title and/or Description field'
+  if (
+    !title ||
+    !description ||
+    completed === undefined ||
+    title?.length > 255
+  ) {
+    const messageDetails =
+      title.length > 255
+        ? 'Title length too long'
+        : 'Missing Title and/or Description field'
     generateClientError({
       res,
       action: 'updating',
