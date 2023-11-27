@@ -2,7 +2,7 @@ import express from 'express'
 
 import bodyParser from 'body-parser'
 
-import tasksRoute from './routes/tasksRoutes'
+import tasksRoute from './routes/tasks'
 
 const app = express()
 const port = process.env.PORT || 9000

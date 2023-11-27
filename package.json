@@ -12,7 +12,7 @@
     "format:write": "prettier --write \"**/*.ts\"",
     "lint:check": "eslint \"**/*.ts\"",
     "lint:fix": "eslint --fix \"**/*.ts\"",
-    "pre-commit": "pnpm format:write && pnpm lint:fix",
+    "pre-commit": "pnpm format:write && pnpm lint:fix && pnpm test && pnpm build",
     "db:seed": "node src/db/migration.mjs"
   },
   "keywords": [],

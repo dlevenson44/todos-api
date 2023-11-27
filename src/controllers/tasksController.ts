@@ -10,7 +10,7 @@ import {
   createTask,
   updateTask,
   removeTask,
-} from '../models/tasksModel'
+} from '../models/task'
 import type { PostTaskPayload, Task } from '../types/tasks'
 
 export const getTasks = (_req: Request, res: Response) =>
