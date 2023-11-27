@@ -17,4 +17,6 @@ COPY . /usr/src/app
 
 EXPOSE 9000
 
+RUN pnpm db:seed
+
 CMD [ "pnpm", "start" ]
