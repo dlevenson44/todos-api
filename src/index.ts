@@ -5,7 +5,7 @@ import bodyParser from 'body-parser'
 import tasksRoute from './routes/tasks'
 
 const app = express()
-const port = process.env.PORT || 9000
+const port = process.env.PORT || 3000
 
 app.disable('x-powered-by')
 
